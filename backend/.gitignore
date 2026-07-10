@@ -1,0 +1,56 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Project Outputs & Local Data
+outputs/
+models/
+datasets/
+uvicorn*.log
+*.log
+*.csv
+*.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

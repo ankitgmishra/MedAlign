@@ -1,0 +1,56 @@
+# MISC Files
+experimental-codes/
+dpo_dataset.json
+test.json
+snapshot.png
+
+# ML & Artifacts
+datasets/
+models/
+outputs/
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+.project
+.classpath
+.settings/
+
+# Monorepo specific
+node_modules/
+.venv/
+.env
+
+# Build and Cache
+.next/
+out/
+build/
+dist/
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Generated Evaluation / Training Artifacts
+backend/outputs/
+backend/models/
+backend/datasets/
