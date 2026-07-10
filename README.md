@@ -36,37 +36,115 @@ MedAlign employs a highly optimized, two-stage evaluation pipeline to balance sp
 Every prediction passes through the **Primary LLM Judge**. If the prediction is safe and confident, it is recorded. If it triggers a safety flag or demonstrates poor clinical logic, it is escalated to the **Consensus Review System** where three specialized agents debate the outcome.
 
 ```mermaid
-graph TD
-    classDef primary fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
-    classDef agent fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#f8fafc;
-    classDef output fill:#334155,stroke:#94a3b8,stroke-width:1px,color:#f8fafc;
-    classDef danger fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#f8fafc;
+flowchart TD
 
-    A[Dataset Loaded] --> B[Inference Model Generation]
-    B --> C{Primary LLM Judge}
-    class C primary;
+%% =====================================
+%% Styling
+%% =====================================
 
-    C -->|High Confidence & Safe| D[Record Final Metrics]
-    
-    C -->|Low Confidence OR Unsafe| E{Consensus Escalation}
-    class E danger;
+classDef highlight fill:#111111,stroke:#666,stroke-width:2px,color:#fff
+classDef eval fill:#1a365d,stroke:#2b6cb0,stroke-width:2px,color:#fff
+classDef train fill:#4a154b,stroke:#97266d,stroke-width:2px,color:#fff
+classDef gen fill:#1c4532,stroke:#276749,stroke-width:2px,color:#fff
+classDef inv fill:#44337a,stroke:#6b46c1,stroke-width:2px,color:#fff
+classDef consensus fill:#742a2a,stroke:#9b2c2c,stroke-width:2px,color:#fff
 
-    E --> F[Attending Physician Agent]
-    E --> G[Clinical Pharmacist Agent]
-    E --> H[Patient Safety Officer Agent]
-    
-    class F,G,H agent;
+%% =====================================
+%% Dataset
+%% =====================================
 
-    F --> I[Consensus Aggregator]
-    G --> I[Consensus Aggregator]
-    H --> I[Consensus Aggregator]
-    
-    I --> |Synthesize Agreements & Conflicts| D
+A[Dataset Upload]:::highlight
+A --> B[Schema Validation & Normalization]
 
-    D --> J[(JSON & CSV Artifacts)]
-    class J output;
-    
-    J --> K[Next.js Dashboard Analytics]
+%% =====================================
+%% Base Evaluation
+%% =====================================
+
+B --> C[Base Medical Model]
+
+subgraph EVAL["Evaluation Engine"]
+
+C --> D[Primary LLM Judge]:::eval
+
+D -->|High Confidence| E[Evaluation Report]
+
+D -->|Low Confidence / Unsafe| F[Consensus Review]:::consensus
+
+F --> F1[Attending Physician]
+
+F --> F2[Clinical Pharmacist]
+
+F --> F3[Safety & Ethics Reviewer]
+
+F1 --> G[Consensus Aggregator]
+F2 --> G
+F3 --> G
+
+G --> E
+
+E --> H[Final Report]:::inv
+
+H --> I[Nextjs Dashboard]
+
+end
+
+%% =====================================
+%% Dataset Generation
+%% =====================================
+
+I --> J[Generate SFT Dataset]:::gen
+
+I --> K[Generate Preference Dataset]:::gen
+
+%% =====================================
+%% SFT
+%% =====================================
+
+J --> L[SFT Training]:::train
+
+L --> M[(SFT Model)]
+
+%% =====================================
+%% DPO
+%% =====================================
+
+M --> N[DPO Training]:::train
+
+K --> N
+
+N --> O[(DPO Model)]
+
+%% =====================================
+%% Re-Evaluation
+%% =====================================
+
+subgraph RE["Re-Evaluation"]
+
+M --> P[Evaluate SFT Model]:::eval
+
+O --> Q[Evaluate DPO Model]:::eval
+
+P --> R[SFT Benchmark Report]
+
+Q --> S[DPO Benchmark Report]
+
+end
+
+%% =====================================
+%% Final Comparison
+%% =====================================
+
+I --> T
+
+R --> T
+
+S --> T
+
+T[Compare SFT vs DPO]:::highlight
+
+T --> U[Final Report]
+
+U --> V[(CSV / JSON Export)]
 ```
 
 ---
