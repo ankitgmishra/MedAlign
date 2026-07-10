@@ -1,8 +1,7 @@
 # MISC Files
+
 experimental-codes/
 dpo_dataset.json
-test.json
-snapshot.png
 
 # ML & Artifacts
 datasets/

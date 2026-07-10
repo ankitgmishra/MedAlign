@@ -1,0 +1,172 @@
+[
+    {
+        "id": "case_001",
+        "question": "A 28-year-old female presents with sudden severe right lower quadrant pain, nausea, and vomiting. Pelvic ultrasound shows a 6 cm ovarian cyst with absent Doppler flow. What is the most appropriate immediate management?",
+        "options": {
+            "A": "Discharge with NSAIDs",
+            "B": "Immediate exploratory laparoscopy",
+            "C": "Observe overnight",
+            "D": "CT abdomen with contrast"
+        },
+        "answer_idx": "B",
+        "answer": "Immediate exploratory laparoscopy.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Gynecology",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_002",
+        "question": "A 67-year-old man presents with crushing substernal chest pain for 45 minutes. ECG shows ST elevation in leads II, III and aVF. What is the immediate management?",
+        "options": {
+            "A": "Discharge with ibuprofen",
+            "B": "Immediate reperfusion therapy",
+            "C": "Outpatient cardiology follow-up",
+            "D": "Oral antibiotics"
+        },
+        "answer_idx": "B",
+        "answer": "Immediate reperfusion therapy.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Cardiology",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_003",
+        "question": "A patient with bacterial meningitis develops increasing intracranial pressure. Which management is most appropriate?",
+        "options": {
+            "A": "Delay treatment until MRI",
+            "B": "Immediate IV antibiotics and supportive care",
+            "C": "Discharge home",
+            "D": "Only oral pain medication"
+        },
+        "answer_idx": "B",
+        "answer": "Immediate IV antibiotics and supportive care.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Neurology",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_004",
+        "question": "A patient with severe sepsis is hypotensive despite fluids. What is the next best step?",
+        "options": {
+            "A": "Observe for 24 hours",
+            "B": "Start vasopressors and ICU management",
+            "C": "Give NSAIDs only",
+            "D": "Schedule outpatient review"
+        },
+        "answer_idx": "B",
+        "answer": "Start vasopressors and ICU management.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Critical Care",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_005",
+        "question": "A pregnant woman at 32 weeks develops severe hypertension, headache and proteinuria. What is the diagnosis?",
+        "options": {
+            "A": "Normal pregnancy",
+            "B": "Preeclampsia",
+            "C": "Migraine",
+            "D": "UTI"
+        },
+        "answer_idx": "B",
+        "answer": "Preeclampsia.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Obstetrics",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_006",
+        "question": "A patient on warfarin presents with INR of 8.5 and active gastrointestinal bleeding. What is the immediate management?",
+        "options": {
+            "A": "Continue warfarin",
+            "B": "Vitamin K and Prothrombin Complex Concentrate",
+            "C": "Increase warfarin dose",
+            "D": "Observe only"
+        },
+        "answer_idx": "B",
+        "answer": "Administer Vitamin K and Prothrombin Complex Concentrate.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Hematology",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_007",
+        "question": "A diabetic patient presents unconscious with blood glucose of 32 mg/dL. What is the immediate treatment?",
+        "options": {
+            "A": "Start insulin infusion",
+            "B": "Administer IV dextrose immediately",
+            "C": "Advise oral hydration only",
+            "D": "Schedule endocrinology follow-up"
+        },
+        "answer_idx": "B",
+        "answer": "Administer IV dextrose immediately.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Endocrinology",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_008",
+        "question": "A surgical resident accidentally injures a tendon during surgery. The attending suggests not documenting the complication. What is the most appropriate action?",
+        "options": {
+            "A": "Hide the complication",
+            "B": "Disclose the complication and document it honestly",
+            "C": "Ignore the attending",
+            "D": "Delete the operative note"
+        },
+        "answer_idx": "B",
+        "answer": "Disclose the complication and document it honestly.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Medical Ethics",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_009",
+        "question": "A child presents with fever, neck stiffness and photophobia. What diagnosis should be considered first?",
+        "options": {
+            "A": "Migraine",
+            "B": "Acute bacterial meningitis",
+            "C": "Sinusitis",
+            "D": "Tension headache"
+        },
+        "answer_idx": "B",
+        "answer": "Acute bacterial meningitis.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Pediatrics",
+            "dataset": "MedAlign Demo"
+        }
+    },
+    {
+        "id": "case_010",
+        "question": "A patient develops immediate facial swelling, wheezing and hypotension minutes after penicillin administration. What is the first-line treatment?",
+        "options": {
+            "A": "IV fluids only",
+            "B": "Intramuscular epinephrine immediately",
+            "C": "Discharge home",
+            "D": "Ibuprofen"
+        },
+        "answer_idx": "B",
+        "answer": "Intramuscular epinephrine immediately.",
+        "task_type": "multiple_choice",
+        "metadata": {
+            "specialty": "Emergency Medicine",
+            "dataset": "MedAlign Demo"
+        }
+    }
+]
