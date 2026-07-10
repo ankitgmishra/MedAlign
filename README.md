@@ -2,7 +2,7 @@
   
 # ⚕️ MedAlign 
 
-**A Local-First Workbench for Evaluating, Investigating, and Post-Training Medical Language Models.**
+**A Local-First Workbench for Evaluating, Investigating, and Post-Training SLMs & Medical Language Models.**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,11 +11,11 @@
 
 </div>
 
-MedAlign is a comprehensive, research local-first platform built for researchers, and engineers developing medical foundation models. <br/>
+MedAlign is a comprehensive, research local-first platform built for researchers, and engineers developing Small Language Models and Medical Foundation Models. <br/>
 
 
 It provides an end-to-end, privacy-preserving pipeline to evaluate clinical LLMs against a rigorous clinical rubric, automatically escalate ambiguous or dangerous predictions to a multi-agent Consensus Review panel, and generate targeted SFT/DPO datasets for continuous model improvement.
-
+  
 <br>
 <img src="snapshot.png" alt="MedAlign Dashboard Snapshot" width="100%"/>
 
