@@ -11,10 +11,9 @@
 
 </div>
 
-MedAlign is a comprehensive, research local-first platform built for researchers, and engineers developing Small Language Models and Medical Foundation Models. <br/>
+MedAlign is an end-to-end local research pipeline for training and evaluating medical language models. <br/>
 
-
-It provides an end-to-end, privacy-preserving pipeline to evaluate clinical LLMs against a rigorous clinical rubric, automatically escalate ambiguous or dangerous predictions to a multi-agent Consensus Review panel, and generate targeted SFT/DPO datasets for continuous model improvement.
+It allows you to ingest custom datasets, evaluate baseline models using LLM as Judge &  Agentic as Judge, automatically generate synthetic SFT & DPO datasets, and train/fine-tune models locally—all from a single, unified dashboard.
   
 <br>
 <img src="snapshot.png" alt="MedAlign Dashboard Snapshot" width="100%"/>
