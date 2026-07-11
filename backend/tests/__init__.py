@@ -1,1 +1,0 @@
-"""MedAlign test suite."""

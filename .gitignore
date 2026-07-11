@@ -2,6 +2,8 @@
 
 experimental-codes/
 dpo_dataset.json
+.cursor
+graphify-out
 
 # ML & Artifacts
 datasets/
