@@ -57,6 +57,7 @@ backend/models/
 backend/datasets/
 notebook/dpo_outputs/
 notebook/qwen_dpo/
+notebook
 
 # Model Weights and Jupyter Artifacts
 *.safetensors
