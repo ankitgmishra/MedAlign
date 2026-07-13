@@ -55,3 +55,12 @@ pnpm-debug.log*
 backend/outputs/
 backend/models/
 backend/datasets/
+notebook/dpo_outputs/
+notebook/qwen_dpo/
+
+# Model Weights and Jupyter Artifacts
+*.safetensors
+*.bin
+*.pt
+*.pth
+.ipynb_checkpoints/
