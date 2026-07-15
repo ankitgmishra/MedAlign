@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, Cpu, Database, Terminal, Microscope, Activity, ArrowRight, CheckCircle2, Fingerprint, Loader2 } from 'lucide-react';
+import { EvalPanel } from '../components/EvalPanel';
+import { PipelineNavigation } from '../components/PipelineNavigation';
 
 export default function UnifiedPipeline() {
   const [activeStage, setActiveStage] = useState(1);
@@ -352,17 +354,7 @@ export default function UnifiedPipeline() {
   };
 
 
-  const stages = [
-    { id: 1, name: "Upload", icon: <Upload size={12} /> },
-    { id: 2, name: "Base Eval", icon: <Terminal size={12} /> },
-    { id: 3, name: "SFT Data", icon: <Database size={12} /> },
-    { id: 4, name: "DPO Data", icon: <Fingerprint size={12} /> },
-    { id: 5, name: "Train SFT", icon: <Cpu size={12} /> },
-    { id: 6, name: "SFT Eval", icon: <Terminal size={12} /> },
-    { id: 7, name: "Train DPO", icon: <Cpu size={12} /> },
-    { id: 8, name: "DPO Eval", icon: <Terminal size={12} /> },
-    { id: 9, name: "Compare", icon: <Activity size={12} /> },
-  ];
+  // stages array has been moved to src/components/PipelineNavigation.tsx
 
   const markComplete = (stage: number) => {
     if (!completedStages.includes(stage)) {
@@ -372,92 +364,7 @@ export default function UnifiedPipeline() {
   };
 
 
-  // ── Reusable Eval Results Panel ──────────────────────────────────────────
-  const EvalPanel = ({ evalResult, label, onRun, loading: isLoading }: {
-    evalResult: any; label: string; onRun: () => void; loading: boolean;
-  }) => {
-    const rows: any[] = evalResult?.judge_results || evalResult?.rows || [];
-    const agg = evalResult?.aggregate || {};
-    const excelPath = evalResult?.csv_path || "";
-    return (
-      <div className="w-full flex flex-col gap-5">
-        {rows.length === 0 ? (
-          <button onClick={onRun} disabled={isLoading}
-            className="bg-black text-white px-8 py-3 text-xs font-mono tracking-widest uppercase hover:bg-gray-800 transition-all flex items-center gap-2 disabled:opacity-50 w-fit">
-            {isLoading ? <Loader2 size={14} className="animate-spin" /> : `Run ${label} Evaluation`} <ArrowRight size={14} />
-          </button>
-        ) : (
-          <>
-            {/* Stats Bar */}
-            <div className="flex flex-wrap gap-4 border border-gray-200 p-4 bg-gray-50">
-              {[
-                { k: "Samples", v: agg.total_samples ?? rows.length },
-                { k: "Correct", v: `${((agg.accuracy || 0) * 100).toFixed(1)}%` },
-                { k: "Reasoning", v: `${((agg.avg_reasoning_score || 0) * 100).toFixed(0)}%` },
-                { k: "Accuracy", v: `${((agg.avg_medical_accuracy || 0) * 100).toFixed(0)}%` },
-                { k: "Guideline", v: `${((agg.avg_guideline_adherence || 0) * 100).toFixed(0)}%` },
-                { k: "Completeness", v: `${((agg.avg_completeness || 0) * 100).toFixed(0)}%` },
-                { k: "Unsafe", v: `${((agg.unsafe_rate || 0) * 100).toFixed(1)}%` },
-                { k: "Hallucination", v: `${((agg.hallucination_rate || 0) * 100).toFixed(1)}%` },
-                { k: "Consensus↑", v: `${agg.consensus_escalations ?? 0}` },
-              ].map(({ k, v }) => (
-                <div key={k} className="flex flex-col">
-                  <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">{k}</span>
-                  <span className="text-lg font-mono font-bold text-black">{v}</span>
-                </div>
-              ))}
-              <div className="ml-auto flex gap-2 items-start">
-                {excelPath && <button onClick={() => window.open(`http://localhost:8000/api/v1/evaluate/download/${label.toLowerCase()}`, '_blank')}
-                  className="border border-black text-black bg-white px-3 py-1.5 text-[10px] font-mono tracking-widest uppercase hover:bg-black hover:text-white transition-all flex items-center gap-1 shadow-sm">
-                  <Database size={10} /> Download CSV
-                </button>}
-                <button onClick={() => markComplete(activeStage)}
-                  className="bg-black text-white px-3 py-1.5 text-[10px] font-mono tracking-widest uppercase hover:bg-gray-800 transition-all flex items-center gap-1">
-                  Next <ArrowRight size={10} />
-                </button>
-              </div>
-            </div>
-            {/* Table */}
-            <div className="overflow-x-auto w-full border border-gray-200">
-              <table className="w-full min-w-max text-xs font-mono">
-                <thead className="bg-black text-white">
-                  <tr>
-                    {["#", "Question", "Ground Truth", "Prediction", "Correct", "Reasoning", "Accuracy", "Guideline", "Complete", "Unsafe", "Halluc.", "Consensus", "Explanation"].map(h => (
-                      <th key={h} className="text-left p-2 text-[9px] tracking-widest uppercase font-semibold">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {rows.map((r: any, i: number) => {
-                    const isDangerous = r.unsafe || r.hallucination;
-                    const isTriggered = r.consensus_triggered;
-                    return (
-                    <tr key={i} className={isTriggered ? 'bg-red-500 text-white' : isDangerous ? 'bg-red-600 text-white' : 'hover:bg-gray-50'}>
-                      <td className="p-2 opacity-80">{i + 1}</td>
-                      <td className={`p-2 max-w-[150px] truncate ${isDangerous || isTriggered ? 'text-white' : 'text-gray-600'}`} title={r.question}>{r.question}</td>
-                      <td className={`p-2 max-w-[150px] truncate ${isDangerous || isTriggered ? 'text-white' : 'text-gray-600'}`} title={r.ground_truth}>{r.ground_truth}</td>
-                      <td className={`p-2 max-w-[150px] truncate ${isDangerous || isTriggered ? 'text-white' : 'text-gray-600'}`} title={r.prediction}>{r.prediction}</td>
-                      <td className="p-2"><span className={`px-1.5 py-0.5 text-[9px] font-bold ${r.correct ? (isDangerous || isTriggered ? 'bg-white text-red-700' : 'bg-black text-white') : (isDangerous || isTriggered ? 'border border-white text-white' : 'border border-black text-black')}`}>{r.correct ? '✓ YES' : '✗ NO'}</span></td>
-                      {['reasoning_score', 'medical_accuracy', 'guideline_adherence', 'completeness'].map(k => (
-                        <td key={k} className="p-2">
-                          <span className={isDangerous || isTriggered ? 'text-white font-bold' : 'text-gray-700'}>{((r[k] || 0) * 100).toFixed(0)}%</span>
-                        </td>
-                      ))}
-                      <td className="p-2">{r.unsafe ? <span className={`text-[9px] font-bold ${isDangerous || isTriggered ? 'text-white' : 'text-red-700'}`}>⚠ YES</span> : <span className={`text-[9px] ${isDangerous || isTriggered ? 'text-red-200' : 'text-gray-400'}`}>—</span>}</td>
-                      <td className="p-2">{r.hallucination ? <span className={`text-[9px] font-bold ${isDangerous || isTriggered ? 'text-white' : 'text-orange-700'}`}>⚠ YES</span> : <span className={`text-[9px] ${isDangerous || isTriggered ? 'text-red-200' : 'text-gray-400'}`}>—</span>}</td>
-                      <td className="p-2">{isTriggered ? <span className="bg-white text-red-600 px-1.5 py-0.5 text-[9px] font-bold">✓ ESCALATED</span> : <span className={`text-[9px] ${isDangerous || isTriggered ? 'text-red-200' : 'text-gray-400'}`}>—</span>}</td>
-                      <td className={`p-2 max-w-sm truncate ${isDangerous || isTriggered ? 'text-white font-bold' : 'text-gray-600'}`} title={r.explanation}>{r.explanation}</td>
-                    </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-      </div>
-    );
-  };
+  // Reusable Eval Results Panel has been extracted to src/components/EvalPanel.tsx
 
   return (
     <div className="flex flex-col min-h-screen animate-in fade-in duration-700 max-w-6xl mx-auto p-4 md:p-8">
@@ -492,47 +399,7 @@ export default function UnifiedPipeline() {
         </div>
       </div>
 
-      {/* Pipeline Navigation - Circuit Board Style */}
-      <div className="relative mb-12 w-full">
-        {/* Background circuit line */}
-        <div className="hidden md:block absolute top-5 left-0 w-full h-[1px] bg-gray-200 -z-10" />
-
-        <div className="flex flex-wrap md:flex-nowrap justify-between gap-y-8 w-full">
-          {stages.map((stage, index) => {
-            const isActive = activeStage === stage.id;
-            const isCompleted = completedStages.includes(stage.id);
-            const isPast = isCompleted && !isActive;
-
-            return (
-              <div key={stage.id} className="flex flex-col items-center relative w-[20%] md:w-auto z-10 group cursor-pointer" onClick={() => setActiveStage(stage.id)}>
-
-                {/* Circuit Node */}
-                <div className={`w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300 border ${isActive ? 'bg-black border-black text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-y-1 -translate-x-1' :
-                  isPast ? 'border-gray-800 bg-gray-200 text-gray-800' :
-                    'bg-gray-100 border-gray-300 text-gray-500 hover:border-gray-500 hover:text-black'
-                  }`}>
-                  {isPast ? <CheckCircle2 size={14} className="text-black" /> : stage.icon}
-                </div>
-
-                {/* Vertical connection dot for mobile wrapping if needed */}
-                <div className={`w-[1px] h-4 mt-2 hidden ${isActive ? 'bg-black' : isPast ? 'bg-gray-800' : 'bg-gray-300'} md:hidden`} />
-
-                {/* Stage Label */}
-                <div className="mt-3 flex flex-col items-center text-center">
-                  <span className={`text-[9px] font-mono tracking-widest uppercase transition-all duration-300 ${isActive ? 'text-black font-bold' :
-                    isPast ? 'text-gray-800' : 'text-gray-500'
-                    }`}>
-                    {stage.name}
-                  </span>
-                  <span className={`text-[8px] font-mono mt-1 ${isActive ? 'text-gray-500' : 'text-transparent'}`}>
-                    0{stage.id}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <PipelineNavigation activeStage={activeStage} completedStages={completedStages} setActiveStage={setActiveStage} />
 
       <div className="flex-1 flex flex-col gap-1 overflow-hidden">
 
@@ -981,7 +848,7 @@ export default function UnifiedPipeline() {
                 </div>
               </div>
 
-              <EvalPanel evalResult={sftEval} label="SFT" onRun={handleSFTEval} loading={loading} />
+              <EvalPanel evalResult={sftEval} label="SFT" onRun={handleSFTEval} loading={loading} onNext={() => markComplete(6)} />
 
               {completedStages.includes(6) && (
                 <button onClick={() => setActiveStage(7)} className="mt-8 bg-white text-black border border-black px-6 py-2 text-[10px] tracking-widest font-mono hover:bg-black hover:text-white transition-all flex items-center gap-2 uppercase">
@@ -1099,7 +966,7 @@ export default function UnifiedPipeline() {
                 </div>
               </div>
 
-              <EvalPanel evalResult={dpoEval} label="DPO" onRun={handleDPOEval} loading={loading} />
+              <EvalPanel evalResult={dpoEval} label="DPO" onRun={handleDPOEval} loading={loading} onNext={() => markComplete(8)} />
 
               {completedStages.includes(8) && (
                 <button onClick={() => setActiveStage(9)} className="mt-8 bg-white text-black border border-black px-6 py-2 text-[10px] tracking-widest font-mono hover:bg-black hover:text-white transition-all flex items-center gap-2 uppercase">

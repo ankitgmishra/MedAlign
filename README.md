@@ -1,19 +1,11 @@
-<div align="center">
-  
 # ⚕️ MedAlign 
 
-**A Local-First Workbench for Evaluating, Investigating, and Post-Training SLMs & Medical Language Models.**
+> **Note:** This is an older project of mine that I've decided to open-source and push to GitHub. It's a complete local-first workbench for evaluating and post-training medical language models.
+
+MedAlign is an end-to-end local research pipeline for training and evaluating medical language models. It allows you to ingest datasets, evaluate baseline models using LLM as Judge & Multi-Agent Consensus, generate SFT & DPO datasets, and fine-tune models locally—all from a single dashboard.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-
-
-</div>
-
-MedAlign is an end-to-end local research pipeline for training and evaluating medical language models. <br/>
-
-It allows you to ingest custom datasets, evaluate baseline models using LLM as Judge &  Agentic as Judge, automatically generate synthetic SFT & DPO datasets, and train/fine-tune models locally—all from a single, unified dashboard.
   
 <br>
 <img src="snapshot.png" alt="MedAlign Dashboard Snapshot" width="100%"/>
